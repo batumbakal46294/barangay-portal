@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barangay Portal - Admin Dashboard</title>
+    <style>
+        :root {
+            --primary: #0056b3;
+            --dark-sidebar: #1e293b;
+            --light-bg: #f8fafc;
+            --border-color: #e2e8f0;
+            --success: #22c55e;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+
+        body {
+            display: flex;
+            background-color: var(--light-bg);
+            min-height: 100vh;
+        }
+
+        /* 1. SIDEBAR STYLING */
+        .sidebar {
+            width: 260px;
+            background-color: var(--dark-sidebar);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            padding: 1.5rem;
+        }
+
+        .sidebar h2 {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #334155;
+            text-align: center;
+            color: #94a3b8;
+        }
+
+        .sidebar a {
+            color: #cbd5e1;
+            text-decoration: none;
+            padding: 0.75rem 1rem;
+            margin-bottom: 0.5rem;
+            border-radius: 6px;
+            display: block;
+            transition: all 0.2s;
+        }
+
+        .sidebar a:hover, .sidebar a.active {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .sidebar .logout {
+            margin-top: auto;
+            background-color: #dc2626;
+            text-align: center;
+        }
+        .sidebar .logout:hover { background-color: #b91c1c; }
+
+        /* 2. MAIN CONTENT AREA */
+        .main-content {
+            margin-left: 260px; /* Leaves space for the fixed sidebar */
+            flex-grow: 1;
+            padding: 2rem;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        /* 3. STATS CARDS */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .stat-card h3 {
+            font-size: 0.9rem;
+            color: #64748b;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+        }
+
+        .stat-card .number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #0f172a;
+        }
+
+        /* 4. MANAGEMENT TABLES / FORMS */
+        .data-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .data-card h2 {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            color: #1e293b;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        th, td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            background-color: #f1f5f9;
+            color: #475569;
+            font-weight: 600;
+        }
+
+        .btn-action {
+            padding: 0.25rem 0.5rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85rem;
+        }
+        .btn-edit { background: #3b82f6; color: white; margin-right: 5px; }
+        .btn-delete { background: #ef4444; color: white; }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <h2>Barangay Admin Panel</h2>
+        <a href="#" class="active">📊 Dashboard</a>
+        <a href="#">📢 Manage Announcements</a>
+        <a href="#">🏗️ Manage Projects</a>
+        <a href="#">📩 Resident Complaints</a>
+        <a href="index.html" class="logout">🚪 Logout</a>
+    </div>
+
+    <div class="main-content">
+        <div class="header">
+            <div>
+                <h1>Dashboard Overview</h1>
+                <p style="color: #64748b;">Welcome back, Administrator</p>
+            </div>
+            <div style="font-weight: 600; color: var(--primary);">System Status: Online Live</div>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3>Total Registered Residents</h3>
+                <div class="number">1,245</div>
+            </div>
+            <div class="stat-card">
+                <h3>Active Projects</h3>
+                <div class="number">3</div>
+            </div>
+            <div class="stat-card">
+                <h3>Pending Certificates</h3>
+                <div class="number">14</div>
+            </div>
+        </div>
+
+        <div class="data-card">
+            <h2>Recent Community Project Tracker</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Project Title</th>
+                        <th>Assigned Budget</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Barangay CCTV Installation</td>
+                        <td>₱45,000</td>
+                        <td style="color: #eab308; font-weight: bold;">In Progress</td>
+                        <td>
+                            <button class="btn-action btn-edit">Edit</button>
+                            <button class="btn-action btn-delete">Delete</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Solar Streetlights Phase 1</td>
+                        <td>₱120,000</td>
+                        <td style="color: var(--success); font-weight: bold;">Completed</td>
+                        <td>
+                            <button class="btn-action btn-edit">Edit</button>
+                            <button class="btn-action btn-delete">Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</body>
+</html>
