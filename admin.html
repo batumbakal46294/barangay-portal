@@ -42,10 +42,6 @@
         }
 
         .sidebar h2 {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid #334155;
             text-align: center;
             color: #94a3b8;
         }
@@ -79,6 +75,7 @@
             padding: 0.75rem;
             border-radius: 6px;
             font-weight: bold;
+            display: block;
         }
         .sidebar .logout:hover { background-color: #b91c1c; }
 
@@ -98,7 +95,7 @@
             border-bottom: 1px solid var(--border-color);
         }
 
-        /* TAB CONTAINER VISIBILITY SYSTEM */
+        /* TAB CONTAINER VISIBILITY */
         .tab-content {
             display: none;
         }
@@ -243,7 +240,13 @@
 <body>
 
     <div class="sidebar">
-        <h2>Barangay Admin Panel</h2>
+        <div style="display: flex; justify-content: center; align-items: center; gap: 15px; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid #334155;">
+            <img src="YOUR_CITY_SEAL_URL_HERE.png" alt="City Seal" style="width: 60px; height: 60px; object-fit: contain;">
+            <img src="YOUR_BARANGAY_SEAL_URL_HERE.png" alt="Barangay Seal" style="width: 60px; height: 60px; object-fit: contain;">
+        </div>
+        
+        <h2 style="font-size: 1.1rem; margin-bottom: 1.5rem; border: none; padding: 0;">Barangay Admin Panel</h2>
+
         <button class="nav-btn active" onclick="switchTab('dashboard')">📊 Dashboard</button>
         <button class="nav-btn" onclick="switchTab('announcements')">📢 Manage Announcements</button>
         <button class="nav-btn" onclick="switchTab('projects')">🏗️ Manage Projects</button>
@@ -267,7 +270,7 @@
                 </div>
                 <div class="stat-card">
                     <h3>Active Projects</h3>
-                    <div class="number" id="stats-projects-count">0</div>
+                    <div class="number" id="stats-projects-count">2</div>
                 </div>
                 <div class="stat-card">
                     <h3>Active Announcements</h3>
@@ -275,8 +278,8 @@
                 </div>
             </div>
             <div class="data-card">
-                <h2>Welcome to the Portal Hub</h2>
-                <p>Use the control dashboard panel to make updates in your browser data layer instantly.</p>
+                <h2>Welcome to the Operational Dashboard</h2>
+                <p>Select management categories on the left structural navigation panel to insert, modify, or terminate community records live in your web client environment.</p>
             </div>
         </div>
 
@@ -302,7 +305,7 @@
         <div id="projects" class="tab-content">
             <div class="data-card">
                 <h2>
-                    Active Community Projects
+                    Recent Community Project Tracker
                     <button class="btn-create" onclick="openModal('projectModal')">+ Create Project</button>
                 </h2>
                 <table>
@@ -401,11 +404,9 @@
         let currentProjEditIndex = null;
 
         function renderData() {
-            // Update Dashboard Overview Counter Stats
             document.getElementById('stats-announcements-count').innerText = announcements.length;
             document.getElementById('stats-projects-count').innerText = projects.length;
 
-            // Render Announcements Row Data
             const annTable = document.getElementById('announcementTableBody');
             annTable.innerHTML = '';
             announcements.forEach((ann, index) => {
@@ -420,7 +421,6 @@
                     </tr>`;
             });
 
-            // Render Infrastructure Projects Row Data
             const projTable = document.getElementById('projectTableBody');
             projTable.innerHTML = '';
             projects.forEach((proj, index) => {
@@ -437,7 +437,6 @@
             });
         }
 
-        // ANNOUNCEMENT FORM PROCESSOR
         document.getElementById('announcementForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const title = document.getElementById('annTitle').value;
@@ -470,7 +469,6 @@
             }
         }
 
-        // PROJECT FORM PROCESSOR
         document.getElementById('projectForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const name = document.getElementById('projName').value;
