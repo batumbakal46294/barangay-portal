@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Barangay Portal - Interactive Admin Dashboard</title>
+    <title>Barangay Portal - Admin Dashboard</title>
     <style>
         :root {
             --primary: #0056b3;
@@ -82,7 +82,7 @@
         }
         .sidebar .logout:hover { background-color: #b91c1c; }
 
-        /* MAIN CONTENT AREA */
+        /* MAIN CONTENT WORKSPACE */
         .main-content {
             margin-left: 260px;
             flex-grow: 1;
@@ -98,7 +98,7 @@
             border-bottom: 1px solid var(--border-color);
         }
 
-        /* TAB MANAGEMENT */
+        /* TAB CONTAINER VISIBILITY SYSTEM */
         .tab-content {
             display: none;
         }
@@ -106,19 +106,46 @@
             display: block;
         }
 
-        /* FORMS & CARDS */
+        /* CARDS & CONTAINERS */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .stat-card h3 {
+            font-size: 0.9rem;
+            color: #64748b;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+        }
+
+        .stat-card .number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #0f172a;
+        }
+
         .data-card {
             background: white;
             padding: 1.5rem;
             border-radius: 8px;
             border: 1px solid var(--border-color);
             margin-bottom: 2rem;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
         }
 
         .data-card h2 {
             margin-bottom: 1.5rem;
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             color: #1e293b;
             display: flex;
             justify-content: space-between;
@@ -136,7 +163,7 @@
         }
         .btn-create:hover { background-color: #16a34a; }
 
-        /* TABLES */
+        /* DATA MANAGEMENT TABLES */
         table {
             width: 100%;
             border-collapse: collapse;
@@ -154,17 +181,20 @@
             font-weight: 600;
         }
 
-        .btn-delete {
-            background: var(--danger);
-            color: white;
-            border: none;
+        .btn-action {
             padding: 0.25rem 0.5rem;
+            border: none;
             border-radius: 4px;
             cursor: pointer;
+            font-size: 0.85rem;
+            color: white;
         }
+        .btn-edit { background: #3b82f6; margin-right: 5px; }
+        .btn-edit:hover { background: #2563eb; }
+        .btn-delete { background: var(--danger); }
         .btn-delete:hover { background: #b91c1c; }
 
-        /* MODAL POPUP BACKGROUND */
+        /* MODAL (POPUP FORM) STYLES */
         .modal {
             display: none;
             position: fixed;
@@ -181,10 +211,9 @@
             border-radius: 8px;
             width: 100%;
             max-width: 500px;
-            position: relative;
         }
 
-        .modal h3 { margin-bottom: 1rem; }
+        .modal h3 { margin-bottom: 1.25rem; }
 
         .form-group {
             margin-bottom: 1.25rem;
@@ -222,26 +251,39 @@
     </div>
 
     <div class="main-content">
-        
         <div class="header">
             <div>
                 <h1 id="page-title">Dashboard Overview</h1>
                 <p style="color: #64748b;">Welcome back, Administrator</p>
             </div>
-            <div style="font-weight: 600; color: var(--primary);">System Status: Live (LocalStorage Active)</div>
+            <div style="font-weight: 600; color: var(--primary);">System Status: Live Engine</div>
         </div>
 
         <div id="dashboard" class="tab-content active">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>Total Registered Residents</h3>
+                    <div class="number">1,245</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Active Projects</h3>
+                    <div class="number" id="stats-projects-count">0</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Active Announcements</h3>
+                    <div class="number" id="stats-announcements-count">0</div>
+                </div>
+            </div>
             <div class="data-card">
-                <h2>Welcome to the Control Panel</h2>
-                <p>Use the links on the left sidebar to add, modify, or clear operational records directly inside your browser database environment.</p>
+                <h2>Welcome to the Portal Hub</h2>
+                <p>Use the control dashboard panel to make updates in your browser data layer instantly.</p>
             </div>
         </div>
 
         <div id="announcements" class="tab-content">
             <div class="data-card">
                 <h2>
-                    Active Announcements 
+                    Active System Announcements
                     <button class="btn-create" onclick="openModal('announcementModal')">+ Create Announcement</button>
                 </h2>
                 <table>
@@ -249,11 +291,10 @@
                         <tr>
                             <th>Title</th>
                             <th>Description</th>
-                            <th>Action</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
-                    <tbody id="announcementTableBody">
-                        </tbody>
+                    <tbody id="announcementTableBody"></tbody>
                 </table>
             </div>
         </div>
@@ -261,24 +302,22 @@
         <div id="projects" class="tab-content">
             <div class="data-card">
                 <h2>
-                    Active Infrastructure Projects 
+                    Active Community Projects
                     <button class="btn-create" onclick="openModal('projectModal')">+ Create Project</button>
                 </h2>
                 <table>
                     <thead>
                         <tr>
-                            <th>Project Name</th>
-                            <th>Allocated Budget</th>
+                            <th>Project Title</th>
+                            <th>Assigned Budget</th>
                             <th>Status</th>
-                            <th>Action</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
-                    <tbody id="projectTableBody">
-                        </tbody>
+                    <tbody id="projectTableBody"></tbody>
                 </table>
             </div>
         </div>
-
     </div>
 
     <div id="announcementModal" class="modal">
@@ -287,11 +326,11 @@
             <form id="announcementForm">
                 <div class="form-group">
                     <label>Announcement Title</label>
-                    <input type="text" id="annTitle" required placeholder="e.g., General Assembly Assembly">
+                    <input type="text" id="annTitle" required>
                 </div>
                 <div class="form-group">
                     <label>Details / Description</label>
-                    <textarea id="annDesc" rows="4" required placeholder="Describe details regarding this notification..."></textarea>
+                    <textarea id="annDesc" rows="4" required></textarea>
                 </div>
                 <div class="modal-actions">
                     <button type="button" class="btn-close" onclick="closeModal('announcementModal')">Cancel</button>
@@ -303,22 +342,21 @@
 
     <div id="projectModal" class="modal">
         <div class="modal-content">
-            <h3>Add New Project Profile</h3>
+            <h3>Add New Project</h3>
             <form id="projectForm">
                 <div class="form-group">
-                    <label>Project Name</label>
-                    <input type="text" id="projName" required placeholder="e.g., Road Drainage Cleaning">
+                    <label>Project Title</label>
+                    <input type="text" id="projName" required>
                 </div>
                 <div class="form-group">
-                    <label>Allocated Funding (Budget)</label>
-                    <input type="text" id="projBudget" required placeholder="e.g., ₱50,000">
+                    <label>Assigned Budget</label>
+                    <input type="text" id="projBudget" required>
                 </div>
                 <div class="form-group">
-                    <label>Project Status</label>
+                    <label>Status</label>
                     <select id="projStatus">
                         <option value="In Progress">In Progress</option>
                         <option value="Completed">Completed</option>
-                        <option value="Suspended">Suspended</option>
                     </select>
                 </div>
                 <div class="modal-actions">
@@ -330,28 +368,44 @@
     </div>
 
     <script>
-        // 1. NAVIGATION TAB SWITCHING
         function switchTab(tabId) {
             document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
             document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
-            
             document.getElementById(tabId).classList.add('active');
             event.target.classList.add('active');
-            
-            // Format Title
-            document.getElementById('page-title').innerText = tabId.charAt(0).toUpperCase() + tabId.slice(1) + " Console";
+            document.getElementById('page-title').innerText = event.target.innerText.split(' ')[1] + " Console";
         }
 
-        // 2. MODAL SYSTEM VISIBILITY
         function openModal(id) { document.getElementById(id).style.display = 'flex'; }
-        function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+        function closeModal(id) { 
+            document.getElementById(id).style.display = 'none'; 
+            if(id === 'announcementModal') {
+                currentEditIndex = null;
+                document.querySelector('#announcementModal h3').innerText = "Add New Announcement";
+                document.getElementById('announcementForm').reset();
+            }
+            if(id === 'projectModal') {
+                currentProjEditIndex = null;
+                document.querySelector('#projectModal h3').innerText = "Add New Project";
+                document.getElementById('projectForm').reset();
+            }
+        }
 
-        // 3. STORAGE LOGIC FOR DATA LOOPS
         let announcements = JSON.parse(localStorage.getItem('announcements')) || [];
-        let projects = JSON.parse(localStorage.getItem('projects')) || [];
+        let projects = JSON.parse(localStorage.getItem('projects')) || [
+            {name: "Barangay CCTV Installation", budget: "₱45,000", status: "In Progress"},
+            {name: "Solar Streetlights Phase 1", budget: "₱120,000", status: "Completed"}
+        ];
+        
+        let currentEditIndex = null;
+        let currentProjEditIndex = null;
 
         function renderData() {
-            // Render Announcements
+            // Update Dashboard Overview Counter Stats
+            document.getElementById('stats-announcements-count').innerText = announcements.length;
+            document.getElementById('stats-projects-count').innerText = projects.length;
+
+            // Render Announcements Row Data
             const annTable = document.getElementById('announcementTableBody');
             annTable.innerHTML = '';
             announcements.forEach((ann, index) => {
@@ -359,11 +413,14 @@
                     <tr>
                         <td><strong>${ann.title}</strong></td>
                         <td>${ann.desc}</td>
-                        <td><button class="btn-delete" onclick="deleteAnnouncement(${index})">Delete</button></td>
+                        <td>
+                            <button class="btn-action btn-edit" onclick="editAnnouncement(${index})">Edit</button>
+                            <button class="btn-action btn-delete" onclick="deleteAnnouncement(${index})">Delete</button>
+                        </td>
                     </tr>`;
             });
 
-            // Render Projects
+            // Render Infrastructure Projects Row Data
             const projTable = document.getElementById('projectTableBody');
             projTable.innerHTML = '';
             projects.forEach((proj, index) => {
@@ -371,52 +428,83 @@
                     <tr>
                         <td><strong>${proj.name}</strong></td>
                         <td>${proj.budget}</td>
-                        <td style="font-weight:bold; color:${proj.status === 'Completed' ? 'var(--success)' : '#eab308'}">${proj.status}</td>
-                        <td><button class="btn-delete" onclick="deleteProject(${index})">Delete</button></td>
+                        <td style="color: ${proj.status === 'Completed' ? 'var(--success)' : '#eab308'}; font-weight: bold;">${proj.status}</td>
+                        <td>
+                            <button class="btn-action btn-edit" onclick="editProject(${index})">Edit</button>
+                            <button class="btn-action btn-delete" onclick="deleteProject(${index})">Delete</button>
+                        </td>
                     </tr>`;
             });
         }
 
-        // 4. HANDLING FORM SUBMISSIONS
+        // ANNOUNCEMENT FORM PROCESSOR
         document.getElementById('announcementForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            announcements.push({
-                title: document.getElementById('annTitle').value,
-                desc: document.getElementById('annDesc').value
-            });
+            const title = document.getElementById('annTitle').value;
+            const desc = document.getElementById('annDesc').value;
+
+            if (currentEditIndex !== null) {
+                announcements[currentEditIndex] = { title, desc };
+            } else {
+                announcements.push({ title, desc });
+            }
+
             localStorage.setItem('announcements', JSON.stringify(announcements));
             closeModal('announcementModal');
-            this.reset();
             renderData();
         });
 
+        function editAnnouncement(index) {
+            currentEditIndex = index;
+            document.getElementById('annTitle').value = announcements[index].title;
+            document.getElementById('annDesc').value = announcements[index].desc;
+            document.querySelector('#announcementModal h3').innerText = "Edit Announcement";
+            openModal('announcementModal');
+        }
+
+        function deleteAnnouncement(index) {
+            if(confirm("Are you sure you want to delete this announcement?")) {
+                announcements.splice(index, 1);
+                localStorage.setItem('announcements', JSON.stringify(announcements));
+                renderData();
+            }
+        }
+
+        // PROJECT FORM PROCESSOR
         document.getElementById('projectForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            projects.push({
-                name: document.getElementById('projName').value,
-                budget: document.getElementById('projBudget').value,
-                status: document.getElementById('projStatus').value
-            });
+            const name = document.getElementById('projName').value;
+            const budget = document.getElementById('projBudget').value;
+            const status = document.getElementById('projStatus').value;
+
+            if (currentProjEditIndex !== null) {
+                projects[currentProjEditIndex] = { name, budget, status };
+            } else {
+                projects.push({ name, budget, status });
+            }
+
             localStorage.setItem('projects', JSON.stringify(projects));
             closeModal('projectModal');
-            this.reset();
             renderData();
         });
 
-        // 5. DELETION HANDLING
-        function deleteAnnouncement(index) {
-            announcements.splice(index, 1);
-            localStorage.setItem('announcements', JSON.stringify(announcements));
-            renderData();
+        function editProject(index) {
+            currentProjEditIndex = index;
+            document.getElementById('projName').value = projects[index].name;
+            document.getElementById('projBudget').value = projects[index].budget;
+            document.getElementById('projStatus').value = projects[index].status;
+            document.querySelector('#projectModal h3').innerText = "Edit Project Entry";
+            openModal('projectModal');
         }
 
         function deleteProject(index) {
-            projects.splice(index, 1);
-            localStorage.setItem('projects', JSON.stringify(projects));
-            renderData();
+            if(confirm("Are you sure you want to delete this project?")) {
+                projects.splice(index, 1);
+                localStorage.setItem('projects', JSON.stringify(projects));
+                renderData();
+            }
         }
 
-        // Initial Load Display Injection
         renderData();
     </script>
 </body>
