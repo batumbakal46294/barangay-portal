@@ -189,17 +189,29 @@
 
     <script>
         document.getElementById('loginForm').addEventListener('submit', function(event) {
-            // Prevents the page from just instantly reloading
+            // Prevents the page from reloading automatically
             event.preventDefault(); 
             
-            // Collects the chosen role from our dropdown selector
+            // Get values entered by the user
             const selectedRole = document.getElementById('role').value;
+            const inputUser = document.getElementById('username').value;
+            const inputPass = document.getElementById('password').value;
+
+            // CONFIGURATION: Set your custom username and password variables here
+            const ADMIN_USERNAME = "admin123";
+            const ADMIN_PASSWORD = "barangaypassword2026";
 
             if (selectedRole === 'admin') {
-                // Routes admins straight to the management dashboard
-                window.location.href = 'admin.html';
+                // If trying to access admin dashboard, evaluate security credentials
+                if (inputUser === ADMIN_USERNAME && inputPass === ADMIN_PASSWORD) {
+                    alert("Admin login successful!");
+                    window.location.href = 'admin.html';
+                } else {
+                    alert("Incorrect Admin Username or Password! Access Denied.");
+                }
             } else {
-                // Routes residents right to the main landing portal
+                // Resident login bypasses restriction for testing purposes
+                alert("Resident login successful!");
                 window.location.href = 'index.html';
             }
         });
