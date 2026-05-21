@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barangay Digital Portal - Home</title>
+    <style>
+        :root {
+            --primary: #0056b3;
+            --secondary: #28a745;
+            --dark: #212529;
+            --light: #f8f9fa;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--light);
+            color: var(--dark);
+        }
+
+        /* Top Navigation Bar */
+        nav {
+            background-color: #002752;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav .logo {
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
+            text-decoration: none;
+        }
+
+        nav .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            background-color: var(--primary);
+            transition: background 0.2s;
+        }
+
+        nav .nav-links a:hover {
+            background-color: #004085;
+        }
+
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 2.5rem 1.5rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .container { grid-template-columns: 1fr; }
+        }
+
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        h2 {
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 0.5rem;
+            color: var(--primary);
+            margin-top: 0;
+        }
+
+        .project-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        @media (max-width: 600px) {
+            .project-grid { grid-template-columns: 1fr; }
+        }
+
+        .project-card {
+            border: 1px solid #ddd;
+            padding: 1rem;
+            border-radius: 6px;
+            background: #fff;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: white;
+        }
+
+        .badge.ongoing { background-color: #ffc107; color: #212529; }
+        .badge.completed { background-color: var(--secondary); }
+
+        .hotline-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .hotline-list li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .hotline-number {
+            font-weight: bold;
+            color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="index.html" class="logo">Barangay Portal</a>
+        <div class="nav-links">
+            <a href="login.html">Resident Login →</a>
+        </div>
+    </nav>
+
+    <header>
+        <h1>Welcome to the Barangay Online Portal</h1>
+        <p>Official Transparency, Announcements, & Project Tracker</p>
+    </header>
+
+    <div class="container">
+        <main class="main-content">
+            
+            <section class="card">
+                <h2>Barangay Reports & Announcements</h2>
+                <article>
+                    <h3>Monthly Financial Transparency Report - May 2026</h3>
+                    <p>The budget utilization report for this month has been finalized. Funds were primarily allocated to the community drainage cleanup and the upcoming youth sports league.</p>
+                    <small>Posted on: May 20, 2026</small>
+                </article>
+                <hr style="border: 0; border-top: 1px solid #eee; margin: 1.5rem 0;">
+                <article>
+                    <h3>Rainy Season Advisory: Drainage Maintenance</h3>
+                    <p>Residents are advised that the engineering team will be conducting a cleanup of waterways starting Monday to prevent local flooding.</p>
+                    <small>Posted on: May 18, 2026</small>
+                </article>
+            </section>
+
+            <section class="card">
+                <h2>Active Community Projects</h2>
+                <div class="project-grid">
+                    <div class="project-card">
+                        <h3>Barangay CCTV Installation</h3>
+                        <p>Phase 2 of putting up security cameras along major street corners for community safety.</p>
+                        <span class="badge ongoing">Ongoing</span>
+                    </div>
+                    <div class="project-card">
+                        <h3>Solar Streetlights Project</h3>
+                        <p>Installation of 50 new eco-friendly solar lights along dark pathways.</p>
+                        <span class="badge completed">Completed</span>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <aside class="sidebar">
+            <div class="card" style="background-color: #fff5f5; border-left: 5px solid #dc3545;">
+                <h2 style="color: #dc3545; border-bottom-color: #dc3545;">Emergency Hotlines</h2>
+                <ul class="hotline-list">
+                    <li><span>Barangay Desk:</span> <span class="hotline-number">8123-4567</span></li>
+                    <li><span>Health Center:</span> <span class="hotline-number">8987-6543</span></li>
+                    <li><span>Fire Dept (BFP):</span> <span class="hotline-number">911</span></li>
+                    <li><span>Police (PNP):</span> <span class="hotline-number">117</span></li>
+                </ul>
+            </div>
+        </aside>
+    </div>
+
+</body>
+</html>
